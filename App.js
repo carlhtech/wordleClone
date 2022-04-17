@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView } from 'react-native';
-import { borderColor, borderLeftColor, color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
-import { colors } from './src/constants';
+import { backgroundColor, borderColor, borderLeftColor, color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+import { colors, CLEAR, ENTER } from './src/constants';
 import Keyboard from './src/components/Keyboard';
 
 const NUMBER_OF_TRIES = 6;
@@ -24,13 +24,47 @@ export default function App() {
 
   const onKeyPressed = (key) => {
     const updateRows = copyArray(rows);
-    updateRows[curRow][curCol] = key;
-    setRows(updateRows);
-    setCurCol(curCol + 1);
+
+    if (key == CLEAR) {
+      const prevCol = curCol - 1;
+      if (prevCol >= 0) {
+        updateRows[curRow][prevCol] = "";
+        setRows(updateRows);
+        setCurCol(prevCol);
+      }
+      return;
+    }
+
+    if (key == ENTER) {
+      if (curCol == rows[0].length) {
+        setCurRow(curRow + 1);
+        setCurCol(0);
+      }
+      return;
+    }
+
+    if (curCol < rows[0].length) {
+      updateRows[curRow][curCol] = key;
+      setRows(updateRows);
+      setCurCol(curCol + 1);
+    }
   }
 
   const isCellActive = (row, col) => {
     return row == curRow && col == curCol;
+  }
+
+  const getCellBGColor = (letter, row, col) => {
+    if (row >= curRow) {
+      return colors.black;
+    }
+    if (letter == letters[col]) {
+      return colors.primary;
+    }
+    if (letters.includes(letter)) {
+      return colors.secondary;
+    }
+    return colors.darkgrey;
   }
 
   return (
@@ -39,17 +73,18 @@ export default function App() {
       <Text style={styles.title}>WORDLE</Text>
       <ScrollView style={styles.map}>
         {rows.map((row, i) => (
-          <View style={styles.row}>
-            {row.map((cell, j) => (
-              <View style={[
+          <View key={`row-${i}`} style={styles.row}>
+            {row.map((letter, j) => (
+              <View key={`cell-${i}-${j}`} style={[
                 styles.cell,
                 {
                   borderColor: isCellActive(i, j)
                     ? colors.lightgrey
-                    : colors.darkgrey
+                    : colors.darkgrey,
+                  backgroundColor: getCellBGColor(letter, i, j),
                 }
               ]}>
-                <Text style={styles.cellText}>{cell.toUpperCase()}</Text>
+                <Text style={styles.cellText}>{letter.toUpperCase()}</Text>
               </View>
             ))}
           </View>
