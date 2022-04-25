@@ -1,3 +1,5 @@
+// Youtube video 1:25:36
+
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView } from 'react-native';
@@ -54,7 +56,9 @@ export default function App() {
     return row == curRow && col == curCol;
   }
 
-  const getCellBGColor = (letter, row, col) => {
+  const getCellBGColor = (row, col) => {
+    const letter = rows[row][col];
+
     if (row >= curRow) {
       return colors.black;
     }
@@ -65,6 +69,11 @@ export default function App() {
       return colors.secondary;
     }
     return colors.darkgrey;
+  }
+
+  const getAllLettersWithColor = (color) => {
+    return rows.flatMap((row, i) =>
+      row.filter((cell, j) => getCellBGColor(i, j) == color));
   }
 
   return (
@@ -81,7 +90,7 @@ export default function App() {
                   borderColor: isCellActive(i, j)
                     ? colors.lightgrey
                     : colors.darkgrey,
-                  backgroundColor: getCellBGColor(letter, i, j),
+                  backgroundColor: getCellBGColor(i, j),
                 }
               ]}>
                 <Text style={styles.cellText}>{letter.toUpperCase()}</Text>
@@ -90,7 +99,12 @@ export default function App() {
           </View>
         ))}
       </ScrollView>
-      <Keyboard onKeyPressed={onKeyPressed} />
+      <Keyboard
+        onKeyPressed={onKeyPressed}
+        greenCaps={getAllLettersWithColor(colors.primary)}
+        yellowCaps={getAllLettersWithColor(colors.secondary)}
+        greyCaps={getAllLettersWithColor(colors.darkgrey)}
+      />
     </SafeAreaView>
   );
 }
@@ -109,7 +123,6 @@ const styles = StyleSheet.create({
   },
   map: {
     alignSelf: "stretch",
-    height: 100,
     marginVertical: 20,
   },
   row: {
