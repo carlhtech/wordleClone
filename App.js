@@ -1,8 +1,8 @@
-// Youtube video 1:25:36
+// Youtube video 1:50:20
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, Alert } from 'react-native';
 import { backgroundColor, borderColor, borderLeftColor, color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import { colors, CLEAR, ENTER } from './src/constants';
 import Keyboard from './src/components/Keyboard';
@@ -21,10 +21,41 @@ export default function App() {
   const [rows, setRows] = useState(new Array(NUMBER_OF_TRIES).fill(
     new Array(letters.length).fill('')
   ));
+
   const [curRow, setCurRow] = useState(0);
   const [curCol, setCurCol] = useState(0);
+  const [gameState, setGameState] = useState('playing');
+
+  useEffect(() => {
+    if (curRow > 0) {
+      checkGameState();
+    }
+  }, [curRow]);
+
+  const checkGameState = () => {
+    if (checkIfWon()) {
+      Alert.alert("1", "You won");
+      setGameState('won');
+    } else if (checkIfLost()) {
+      Alert.alert("Nah", "Try again tomorrow");
+      setGameState('lost');
+    }
+  };
+
+  const checkIfWon = () => {
+    const row = rows[curRow - 1];
+    return row.every((letter, i) => letter == letters[i]);
+  };
+
+  const checkIfLost = () => {
+    return curRow == rows.length;
+  };
 
   const onKeyPressed = (key) => {
+    if (gameState != 'playing') {
+      return;
+    }
+
     const updateRows = copyArray(rows);
 
     if (key == CLEAR) {
@@ -50,7 +81,7 @@ export default function App() {
       setRows(updateRows);
       setCurCol(curCol + 1);
     }
-  }
+  };
 
   const isCellActive = (row, col) => {
     return row == curRow && col == curCol;
