@@ -6,6 +6,9 @@ import { StyleSheet, Text, View, SafeAreaView, ScrollView, Alert } from 'react-n
 import { backgroundColor, borderColor, borderLeftColor, color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import { colors, CLEAR, ENTER } from './src/constants';
 import Keyboard from './src/components/Keyboard';
+import { colorsToEmoji } from './src/constants';
+import * as Clipboard from 'expo-clipboard';
+
 
 const NUMBER_OF_TRIES = 6;
 
@@ -34,12 +37,26 @@ export default function App() {
 
   const checkGameState = () => {
     if (checkIfWon()) {
-      Alert.alert("1", "You won");
+      Alert.alert("Wooo!", "You won", [{ text: 'Share', onPress: shareScore }]);
       setGameState('won');
     } else if (checkIfLost()) {
       Alert.alert("Nah", "Try again tomorrow");
       setGameState('lost');
     }
+  };
+
+  const shareScore = () => {
+    const textMap = rows.map(
+      (row, i) => row.map(
+        (cell, j) => colorsToEmoji[getCellBGColor(i, j)])
+        .join("")
+    )
+      .filter(
+        (row) => row).join("\n");
+
+    const textToShare = `Wordle \n${textMap}`;
+    Clipboard.setString(textToShare);
+    Alert.alert('Copied successfully', 'Share your score on social media')
   };
 
   const checkIfWon = () => {
