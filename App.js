@@ -1,4 +1,4 @@
-// Youtube video 1:50:20
+// Youtube video #2
 
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
@@ -16,10 +16,27 @@ const copyArray = (arr) => {
   return [...arr.map((rows) => [...rows])];
 }
 
-export default function App() {
+// const getDayOfTheYear = () => {
+//   const now = new Date();
+//   const start = new Date(now.getFullYear(), 0, 0);
+//   const diff = now - start;
+//   const oneDay = 1000 * 60 * 60 * 24;
+//   const day = Math.floor(diff / oneDay);
+//   return day;
+// };
 
-  const word = "hello";
-  const letters = word.split('');
+//const dayOfTheYear = getDayOfTheYear();
+
+const words = [
+  "hello",
+  "world",
+];
+
+const word = words[Math.floor(Math.random() * words.length)];
+
+
+export default function App() {
+  const letters = word.split("");
 
   const [rows, setRows] = useState(new Array(NUMBER_OF_TRIES).fill(
     new Array(letters.length).fill('')
@@ -36,10 +53,10 @@ export default function App() {
   }, [curRow]);
 
   const checkGameState = () => {
-    if (checkIfWon()) {
+    if (checkIfWon() && gameState != 'won') {
       Alert.alert("Wooo!", "You won", [{ text: 'Share', onPress: shareScore }]);
       setGameState('won');
-    } else if (checkIfLost()) {
+    } else if (checkIfLost() && gameState != 'lost') {
       Alert.alert("Nah", "Try again tomorrow");
       setGameState('lost');
     }
@@ -65,7 +82,7 @@ export default function App() {
   };
 
   const checkIfLost = () => {
-    return curRow == rows.length;
+    return !checkIfWon() && curRow == rows.length;
   };
 
   const onKeyPressed = (key) => {
