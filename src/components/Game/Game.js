@@ -1,41 +1,18 @@
-// Youtube video #2
-
 import { useState, useEffect } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, Alert } from 'react-native';
-import { backgroundColor, borderColor, borderLeftColor, color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
-import { colors, CLEAR, ENTER } from './src/constants';
-import Keyboard from './src/components/Keyboard';
-import { colorsToEmoji } from './src/constants';
+import { Text, View, ScrollView, Alert } from 'react-native';
+import { colors, CLEAR, ENTER, colorsToEmoji } from '../../constants';
+import Keyboard from '../Keyboard';
 import * as Clipboard from 'expo-clipboard';
-
+import words from '../../words';
+import styles from './Game.styles';
+import { copyArray, getDayOfTheYear } from '../../utils';
 
 const NUMBER_OF_TRIES = 6;
 
-const copyArray = (arr) => {
-    return [...arr.map((rows) => [...rows])];
-}
-
-// const getDayOfTheYear = () => {
-//   const now = new Date();
-//   const start = new Date(now.getFullYear(), 0, 0);
-//   const diff = now - start;
-//   const oneDay = 1000 * 60 * 60 * 24;
-//   const day = Math.floor(diff / oneDay);
-//   return day;
-// };
-
-//const dayOfTheYear = getDayOfTheYear();
-
-const words = [
-    "hello",
-    "world",
-];
-
-const word = words[Math.floor(Math.random() * words.length)];
-
+const dayOfTheYear = getDayOfTheYear();
 
 const Game = () => {
+    const word = words[dayOfTheYear];
     const letters = word.split("");
 
     const [rows, setRows] = useState(new Array(NUMBER_OF_TRIES).fill(
@@ -171,32 +148,5 @@ const Game = () => {
         </>
     );
 }
-
-const styles = StyleSheet.create({
-    map: {
-        alignSelf: "stretch",
-        marginVertical: 20,
-    },
-    row: {
-        alignSelf: "stretch",
-        flexDirection: "row",
-        justifyContent: "center",
-    },
-    cell: {
-        borderWidth: 3,
-        borderColor: colors.darkgrey,
-        flex: 1,
-        aspectRatio: 1,
-        margin: 3,
-        maxWidth: 70,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    cellText: {
-        color: colors.lightgrey,
-        fontWeight: "bold",
-        fontSize: 28,
-    }
-});
 
 export default Game;
