@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Text, View, ScrollView, Alert } from 'react-native';
+import { Text, View, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { colors, CLEAR, ENTER, colorsToEmoji } from '../../constants';
 import Keyboard from '../Keyboard';
 import * as Clipboard from 'expo-clipboard';
 import words from '../../words';
 import styles from './Game.styles';
-import { copyArray, getDayOfTheYear } from '../../utils';
+import { copyArray, getDayOfTheYear, getDayKey } from '../../utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const NUMBER_OF_TRIES = 6;
 
 const dayOfTheYear = getDayOfTheYear();
+const dayKey = getDayKey();
+
 
 const Game = () => {
     const word = words[dayOfTheYear];
@@ -22,12 +25,58 @@ const Game = () => {
     const [curRow, setCurRow] = useState(0);
     const [curCol, setCurCol] = useState(0);
     const [gameState, setGameState] = useState('playing');
+    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
         if (curRow > 0) {
             checkGameState();
         }
     }, [curRow]);
+
+    useEffect(() => {
+        if (loaded) {
+            persistState();
+        }
+    }, [rows, curRow, curCol, gameState])
+
+    useEffect(() => {
+        readState();
+    }, [])
+
+    const persistState = async () => {
+
+        const dataForToday = {
+            rows,
+            curRow,
+            curCol,
+            gameState,
+        };
+
+        try {
+            const existingStateString = await AsyncStorage.getItem('@game');
+            const existingState = existingStateString ? JSON.parse(existingStateString) : {};
+            existingState[dayKey] = dataForToday;
+            const dataString = JSON.stringify(existingState);
+            await AsyncStorage.setItem('@game', dataString);
+        } catch (e) {
+            console.log("Failed to write data to async storage", e);
+        }
+    }
+
+    const readState = async () => {
+        const dataString = await AsyncStorage.getItem('@game');
+        try {
+            const data = JSON.parse(dataString);
+            const day = data[dayKey];
+            setRows(day.rows);
+            setCurCol(day.curCol);
+            setCurRow(day.curRow);
+            setGameState(day.gameState);
+        } catch (e) {
+            console.log("Couldn't parse the state");
+        }
+        setLoaded(true);
+    }
 
     const checkGameState = () => {
         if (checkIfWon() && gameState != 'won') {
@@ -116,6 +165,10 @@ const Game = () => {
     const getAllLettersWithColor = (color) => {
         return rows.flatMap((row, i) =>
             row.filter((cell, j) => getCellBGColor(i, j) == color));
+    }
+
+    if (!loaded) {
+        return (<ActivityIndicator />)
     }
 
     return (
