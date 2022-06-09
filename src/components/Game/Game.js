@@ -7,6 +7,7 @@ import words from '../../words';
 import styles from './Game.styles';
 import { copyArray, getDayOfTheYear, getDayKey } from '../../utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import EndScreen from '../EndScreen';
 
 const NUMBER_OF_TRIES = 6;
 
@@ -44,7 +45,6 @@ const Game = () => {
     }, [])
 
     const persistState = async () => {
-
         const dataForToday = {
             rows,
             curRow,
@@ -170,6 +170,12 @@ const Game = () => {
     if (!loaded) {
         return (<ActivityIndicator />)
     }
+
+    // Will implement below after redesign
+
+    // if (gameState != 'playing') {
+    //     return (<EndScreen won={gameState == "won"} />)
+    // }
 
     return (
         <>

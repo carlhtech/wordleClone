@@ -1,4 +1,4 @@
-// Youtube 34:11
+// Youtube 1:15:58
 
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, Alert } from 'react-native';
