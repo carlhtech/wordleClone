@@ -3,7 +3,7 @@ import { keys, ENTER, CLEAR, colors } from "../../constants";
 import styles, { keyWidth } from "./Keyboard.styles";
 
 const Keyboard = ({
-  onKeyPressed = () => {},
+  onKeyPressed = () => { },
   greenCaps = [],
   yellowCaps = [],
   greyCaps = [],
@@ -22,7 +22,6 @@ const Keyboard = ({
     if (greyCaps.includes(key)) {
       return colors.darkgrey;
     }
-    return colors.grey;
   };
 
   return (
@@ -37,10 +36,9 @@ const Keyboard = ({
               style={[
                 styles.key,
                 isLongButton(key) ? { width: keyWidth * 1.4 } : {},
-                { backgroundColor: getKeyBGColor(key) },
               ]}
             >
-              <Text style={styles.keyText}>{key.toUpperCase()}</Text>
+              <Text style={[styles.keyText, { color: getKeyBGColor(key) }]}>{key.toUpperCase()}</Text>
             </Pressable>
           ))}
         </View>

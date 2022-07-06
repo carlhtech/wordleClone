@@ -16,6 +16,7 @@ const dayKey = getDayKey();
 
 
 const Game = () => {
+    AsyncStorage.removeItem("@game");
     const word = words[dayOfTheYear];
     const letters = word.split("");
 

@@ -6,7 +6,7 @@ import { colors } from '../../constants';
 export default StyleSheet.create({
     map: {
         alignSelf: "stretch",
-        marginVertical: 20,
+        marginVertical: 70,
     },
     row: {
         alignSelf: "stretch",
@@ -14,18 +14,19 @@ export default StyleSheet.create({
         justifyContent: "center",
     },
     cell: {
-        borderWidth: 3,
+        //borderWidth: 3,
         borderColor: colors.darkgrey,
         flex: 1,
         aspectRatio: 1,
         margin: 3,
-        maxWidth: 70,
+        maxWidth: 60,
         justifyContent: "center",
         alignItems: "center",
+        borderRadius: 50,
     },
     cellText: {
-        color: colors.lightgrey,
-        fontWeight: "bold",
+        color: "white",
+        //fontWeight: "bold",
         fontSize: 28,
     }
 });
