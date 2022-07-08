@@ -19,11 +19,11 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //backgroundColor: colors.black,
+    backgroundColor: colors.black,
     alignItems: 'center',
   },
   title: {
-    color: "black",
+    color: "white",
     fontSize: 42,
     //fontWeight: "bold",
     letterSpacing: 7,

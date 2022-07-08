@@ -20,7 +20,10 @@ const Keyboard = ({
       return colors.secondary;
     }
     if (greyCaps.includes(key)) {
-      return colors.darkgrey;
+      return colors.lightgrey;
+    }
+    else {
+      return colors.white;
     }
   };
 

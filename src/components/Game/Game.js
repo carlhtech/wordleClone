@@ -152,7 +152,7 @@ const Game = () => {
         const letter = rows[row][col];
 
         if (row >= curRow) {
-            return colors.black;
+            return colors.white;
         }
         if (letter == letters[col]) {
             return colors.primary;

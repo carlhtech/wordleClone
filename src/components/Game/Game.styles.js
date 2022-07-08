@@ -25,8 +25,8 @@ export default StyleSheet.create({
         borderRadius: 50,
     },
     cellText: {
-        color: "white",
-        //fontWeight: "bold",
-        fontSize: 28,
+        color: "black",
+        fontWeight: "bold",
+        fontSize: 26,
     }
 });
