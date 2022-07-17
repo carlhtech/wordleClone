@@ -4,9 +4,18 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, Alert } from 'react-native';
 import { colors, CLEAR, ENTER } from './src/constants';
 import Game from './src/components/Game';
+import { useFonts } from 'expo-font';
 
 
 export default function App() {
+  const [loaded] = useFonts({
+    Kaushan: require('./assets/fonts/Kaushan.ttf'),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
@@ -24,9 +33,9 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "white",
-    fontSize: 42,
-    //fontWeight: "bold",
+    fontSize: 55,
+    fontFamily: "Kaushan",
     letterSpacing: 7,
-    marginTop: 50
+    marginTop: 30
   }
 });
