@@ -5,6 +5,8 @@ import { StyleSheet, Text, View, SafeAreaView, ScrollView, Alert } from 'react-n
 import { colors, CLEAR, ENTER } from './src/constants';
 import Game from './src/components/Game';
 import { useFonts } from 'expo-font';
+import { Image } from 'react-native';
+import { neonBG } from './assets/images';
 
 
 export default function App() {
@@ -18,6 +20,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Image source={neonBG} style={styles.neonBackground} />
       <StatusBar style="light" />
       <Text style={styles.title}>RANDLE</Text>
       <Game />
@@ -37,5 +40,13 @@ const styles = StyleSheet.create({
     fontFamily: "Kaushan",
     letterSpacing: 7,
     marginTop: 30
+  },
+  neonBackground: {
+    zIndex: -100,
+    height: 980,
+    width: 390,
+    maxWidth: 400,
+    position: 'absolute',
+    marginTop: -66,
   }
 });

@@ -12,6 +12,8 @@ export default StyleSheet.create({
         alignSelf: "stretch",
         flexDirection: "row",
         justifyContent: "center",
+        marginRight: 20,
+        marginLeft: 20,
     },
     cell: {
         //borderWidth: 3,
