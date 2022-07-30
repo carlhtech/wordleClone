@@ -1,5 +1,5 @@
 const backgroundImage = {
-    neonBG: require('./Randle_BG.jpeg'),
+    neonBG: require('./grey_bg.jpeg'),
 }
 
 module.exports = backgroundImage;

@@ -22,7 +22,7 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <Image source={neonBG} style={styles.neonBackground} />
       <StatusBar style="light" />
-      <Text style={styles.title}>RANDLE</Text>
+      <Text style={styles.title}>Randle</Text>
       <Game />
     </SafeAreaView>
   );
@@ -36,9 +36,9 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "white",
-    fontSize: 55,
+    fontSize: 75,
     fontFamily: "Kaushan",
-    letterSpacing: 7,
+    letterSpacing: 5,
     marginTop: 30
   },
   neonBackground: {
