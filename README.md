@@ -9,10 +9,8 @@ Also, redesigned the UI - think it looks quite simple and sleek
 
 <br/>
 
-<img src="https://github.com/carlhtech/carlhtech/blob/main/Images/WWARImages/SS1.png" width="180"/>&nbsp;&nbsp;
-<img src="https://github.com/carlhtech/carlhtech/blob/main/Images/WWARImages/SS2.png" width="180"/>&nbsp;&nbsp;
-<img src="https://github.com/carlhtech/carlhtech/blob/main/Images/WWARImages/SS3.png" width="180"/>&nbsp;&nbsp;
-<img src="https://github.com/carlhtech/carlhtech/blob/main/Images/WWARImages/SS4.png" width="180"/>&nbsp;&nbsp;
+<img src="https://github.com/carlhtech/carlhtech/blob/main/Images/Randle_1.png" width="180"/>&nbsp;&nbsp;
+
 
 
 <br/>
